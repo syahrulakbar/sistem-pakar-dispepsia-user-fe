@@ -1,2 +1,3 @@
 import Form from './Form';
-export {Form};
+import Modal from './Modal';
+export {Form, Modal};

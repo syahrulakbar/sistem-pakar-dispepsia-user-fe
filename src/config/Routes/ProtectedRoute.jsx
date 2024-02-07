@@ -1,5 +1,5 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Blogs, Home, RiwayatKonsultasi, SettingAccount} from '../../screens';
+import {Blogs, Home, RiwayatKonsultasi, Account} from '../../screens';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createBottomTabNavigator();
@@ -17,7 +17,7 @@ export default function ProtectedRoute({navigation}) {
             iconName = focused ? 'calendar' : 'calendar-outline';
           } else if (route.name === 'Blog') {
             iconName = focused ? 'book' : 'book-outline';
-          } else if (route.name === 'User') {
+          } else if (route.name === 'Account') {
             iconName = focused ? 'account-circle' : 'account-circle-outline';
           }
           return <Icon name={iconName} size={30} color={color} />;
@@ -35,7 +35,7 @@ export default function ProtectedRoute({navigation}) {
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Riwayat" component={RiwayatKonsultasi} />
       <Tab.Screen name="Blog" component={Blogs} />
-      <Tab.Screen name="User" component={SettingAccount} />
+      <Tab.Screen name="Account" component={Account} />
     </Tab.Navigator>
   );
 }

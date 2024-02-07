@@ -3,9 +3,10 @@ import Login from './Login';
 import Signup from './Signup';
 import Home from './Home';
 import RiwayatKonsultasi from './RiwayatKonsultasi';
-import SettingAccount from './SettingAccount';
+import Account from './Account';
 import Blogs from './Blogs';
 import DetailBlog from './DetailBlog';
+import SettingAccount from './SettingAccount';
 
 export {
   Welcome,
@@ -16,4 +17,5 @@ export {
   SettingAccount,
   RiwayatKonsultasi,
   DetailBlog,
+  Account,
 };

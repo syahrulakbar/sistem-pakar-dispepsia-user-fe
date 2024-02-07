@@ -73,6 +73,7 @@ export default function Login({navigation}) {
             text="Masuk"
             handleSubmit={formik.handleSubmit}
             disabled={formik.isSubmitting}
+            type="blue"
           />
         </View>
       </View>

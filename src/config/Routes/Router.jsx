@@ -1,6 +1,12 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
-import {Welcome, Login, Signup, DetailBlog} from '../../screens';
+import {
+  Welcome,
+  Login,
+  Signup,
+  DetailBlog,
+  SettingAccount,
+} from '../../screens';
 import Axios from 'axios';
 import {ActivityIndicator, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -47,6 +53,7 @@ export default function Router() {
         <>
           <Stack.Screen name="Protected" component={ProtectedRoute} />
           <Stack.Screen name="DetailBlog" component={DetailBlog} />
+          <Stack.Screen name="SettingAccount" component={SettingAccount} />
         </>
       ) : (
         <>
