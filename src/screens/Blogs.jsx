@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Image, Pressable, Text, View} from 'react-native';
 import Axios from 'axios';
+import {useToast} from 'react-native-toast-notifications';
 
 export default function Blogs({navigation}) {
   const [blogs, setBlogs] = useState([]);
+  const toast = useToast();
   const getBlogs = async () => {
     try {
       const response = await Axios.get('http://10.0.2.2:5000/api/blog', {
@@ -11,7 +13,9 @@ export default function Blogs({navigation}) {
       });
       setBlogs(response.data.data);
     } catch (error) {
-      console.log(error);
+      toast.show(error.response.data.message || 'Failed to Get Blogs', {
+        type: 'danger',
+      });
       throw error;
     }
   };

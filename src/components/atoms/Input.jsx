@@ -20,7 +20,7 @@ export default function Input({...rest}) {
         onChangeText={formik.handleChange(id)}
         onBlur={formik.handleBlur(id)}
         value={formik.values[id]}
-        secureTextEntry={formatPassword && showPassword ? true : false}
+        secureTextEntry={formatPassword ? (showPassword ? false : true) : false}
         placeholder={placeholder}
         keyboardType={keyboardType}
         className="border py-4 px-3 rounded-md mt-2 text-lg"

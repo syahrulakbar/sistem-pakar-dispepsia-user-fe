@@ -1,15 +1,17 @@
 import {useState} from 'react';
-import {Pressable, Text, View} from 'react-native';
+import {KeyboardAvoidingView, Pressable, Text, View} from 'react-native';
 import {Button, Form, Heading, Input} from '../components';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import Axios from 'axios';
 import {useDispatch} from 'react-redux';
+import {useToast} from 'react-native-toast-notifications';
 
 export default function Login({navigation}) {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const dispatch = useDispatch();
+  const toast = useToast();
 
   const handleSubmit = async values => {
     try {
@@ -20,10 +22,15 @@ export default function Login({navigation}) {
         },
       });
       formik.resetForm();
+      toast.show('Login Successfully', {
+        type: 'success',
+      });
       dispatch({type: 'SET_IS_LOGIN', payload: true});
       navigation.navigate('Protected');
     } catch (error) {
-      console.log(error);
+      toast.show(error.response.data.message || 'Failed to Login', {
+        type: 'danger',
+      });
       throw error;
     }
   };
@@ -41,7 +48,7 @@ export default function Login({navigation}) {
   });
 
   const bodyContent = (
-    <View className="w-full h-screen flex flex-col justify-evenly items-center p-2">
+    <View className="w-full h-screen flex flex-1 flex-col justify-evenly items-center p-2">
       <View className="w-full flex flex-col justify-around">
         <Heading text={`Hallo,\nSelamat Datang`} />
         <View className="w-full flex flex-col justify-around">
@@ -85,5 +92,9 @@ export default function Login({navigation}) {
       </Pressable>
     </View>
   );
-  return <Form bodyContent={bodyContent} />;
+  return (
+    <KeyboardAvoidingView behavior="height" className="flex flex-1">
+      <Form bodyContent={bodyContent} />
+    </KeyboardAvoidingView>
+  );
 }

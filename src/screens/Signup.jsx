@@ -1,12 +1,22 @@
 import Axios from 'axios';
 import {useFormik} from 'formik';
 import React, {useState} from 'react';
-import {Pressable, Text, TextInput, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import * as Yup from 'yup';
+import {useToast} from 'react-native-toast-notifications';
+import {Button, Heading, Input} from '../components';
 
 export default function Signup({navigation}) {
   const [showPassword, setShowPassword] = useState(false);
+  const toast = useToast();
 
   const handleSubmit = async values => {
     try {
@@ -17,9 +27,15 @@ export default function Signup({navigation}) {
         },
       });
       formik.resetForm();
+      toast.show('Register Successfully, Please Login', {
+        type: 'success',
+      });
       navigation.navigate('Login');
     } catch (error) {
-      console.log(error);
+      toast.show(error.response.data.message || 'Failed to Register Account', {
+        type: 'danger',
+      });
+      throw error;
     }
   };
 
@@ -42,113 +58,52 @@ export default function Signup({navigation}) {
   });
 
   return (
-    <View className="w-full h-screen flex flex-col justify-evenly items-center p-2">
-      <View className="w-full flex flex-col justify-around">
-        <Text className="font-bold text-black text-3xl">
-          Buat Akun Si ParDi
-        </Text>
+    <KeyboardAvoidingView className="flex flex-1" behavior="height">
+      <View className="w-full h-screen flex  flex-1 flex-col  justify-evenly items-center p-2">
         <View className="w-full flex flex-col justify-around">
-          <View className="my-2">
-            <Text className="text-black">Name*</Text>
-            <TextInput
+          <Heading text="Buat Akun Si ParDi" />
+          <View className="w-full flex flex-col justify-around">
+            <Input
               id="name"
-              onChangeText={formik.handleChange('name')}
-              onBlur={formik.handleBlur('name')}
-              value={formik.values.name}
-              placeholder="Your Username"
-              className="border py-4 px-3 rounded-md mt-2 text-lg"
+              formik={formik}
+              label="Name"
+              placeholder="John Doe"
             />
-            {formik.touched.name && formik.errors.name && (
-              <Text className="text-sm text-red-500 mt-1">
-                {formik.errors.name}
-              </Text>
-            )}
-          </View>
-          <View className="my-2">
-            <Text className="text-black">Email Address*</Text>
-            <TextInput
+            <Input
               id="email"
-              onChangeText={formik.handleChange('email')}
-              onBlur={formik.handleBlur('email')}
-              value={formik.values.email}
+              formik={formik}
+              label="Email Address"
               keyboardType="email-address"
-              placeholder="Your Address"
-              className="border py-4 px-3 rounded-md mt-2 text-lg"
+              placeholder="johndoe@johndoe.com"
             />
-            {formik.touched.email && formik.errors.email && (
-              <Text className="text-sm text-red-500 mt-1">
-                {formik.errors.email}
-              </Text>
-            )}
-          </View>
-          <View className="relative my-2">
-            <Text className="text-black">Password*</Text>
-            <TextInput
+            <Input
               id="password"
-              onChangeText={formik.handleChange('password')}
-              onBlur={formik.handleBlur('password')}
-              value={formik.values.password}
-              secureTextEntry={showPassword ? false : true}
-              placeholder="Password"
-              className="border py-4 px-3 rounded-md mt-2 text-lg"
+              formik={formik}
+              label="Password"
+              placeholder="***********"
+              formatPassword
             />
-            <Pressable
-              className="absolute inset-y-0 right-0 top-11 flex items-center pr-3 text-gray-400"
-              onPress={() => setShowPassword(!showPassword)}>
-              {showPassword ? (
-                <Icon name="eye" size={24} />
-              ) : (
-                <Icon name="eye-off" size={24} />
-              )}
-            </Pressable>
-            {formik.touched.password && formik.errors.password && (
-              <Text className="text-sm text-red-500 mt-1">
-                {formik.errors.password}
-              </Text>
-            )}
-          </View>
-          <View className="relative my-2">
-            <Text className="text-black">Confrim Password*</Text>
-            <TextInput
+            <Input
               id="confirmPassword"
-              onChangeText={formik.handleChange('confirmPassword')}
-              onBlur={formik.handleBlur('confirmPassword')}
-              value={formik.values.confirmPassword}
-              secureTextEntry={showPassword ? false : true}
-              placeholder="Confrim Password"
-              className="border py-4 px-3 rounded-md mt-2 text-lg"
+              formik={formik}
+              label="Confirmation Password"
+              placeholder="***********"
+              formatPassword
             />
-            <Pressable
-              className="absolute inset-y-0 right-0 top-11 flex items-center pr-3 text-gray-400"
-              onPress={() => setShowPassword(!showPassword)}>
-              {showPassword ? (
-                <Icon name="eye" size={24} />
-              ) : (
-                <Icon name="eye-off" size={24} />
-              )}
-            </Pressable>
-            {formik.touched.confirmPassword &&
-              formik.errors.confirmPassword && (
-                <Text className="text-sm text-red-500 mt-1">
-                  {formik.errors.confirmPassword}
-                </Text>
-              )}
           </View>
+          <Button
+            text="Buat Akun"
+            type="blue"
+            handleSubmit={formik.handleSubmit}
+          />
         </View>
-        <View>
-          <Pressable onPress={formik.handleSubmit}>
-            <Text className="text-center bg-blue-400 py-4 m-2 rounded-lg text-white text-lg font-semibold">
-              Buat Akun
-            </Text>
-          </Pressable>
-        </View>
+        <Pressable onPress={() => navigation.navigate('Login')}>
+          <Text className="text-md">
+            Sudah memiliki akun?{' '}
+            <Text className="font-bold underline text-black">Masuk</Text>
+          </Text>
+        </Pressable>
       </View>
-      <Pressable onPress={() => navigation.navigate('Login')}>
-        <Text className="text-md">
-          Sudah memiliki akun?{' '}
-          <Text className="font-bold underline text-black">Masuk</Text>
-        </Text>
-      </Pressable>
-    </View>
+    </KeyboardAvoidingView>
   );
 }

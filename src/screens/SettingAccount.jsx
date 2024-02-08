@@ -3,15 +3,15 @@ import {Button, Form, Heading, Input} from '../components';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import Axios from 'axios';
-import {useDispatch} from 'react-redux';
 import {useEffect, useState} from 'react';
 import CookieManager from '@react-native-cookies/cookies';
 import {launchImageLibrary} from 'react-native-image-picker';
+import {useToast} from 'react-native-toast-notifications';
 
 export default function SettingAccount({navigation}) {
-  const dispatch = useDispatch();
   const [user, setUser] = useState({});
   const [photo, setPhoto] = useState(null);
+  const toast = useToast();
 
   const handleSubmit = async values => {
     try {
@@ -23,8 +23,14 @@ export default function SettingAccount({navigation}) {
           'Content-Type': 'application/json',
         },
       });
+      toast.show('Update Account Success', {
+        type: 'success',
+      });
+      navigation.navigate('Account');
     } catch (error) {
-      console.log(error);
+      toast.show(error.response.data.message || 'Failed to Update Account', {
+        type: 'danger',
+      });
       throw error;
     }
   };
@@ -39,7 +45,13 @@ export default function SettingAccount({navigation}) {
       );
       setUser(response.data.data);
     } catch (error) {
-      console.error(error);
+      toast.show(
+        error.response.data.message || 'Failed to Get Current Account',
+        {
+          type: 'danger',
+        },
+      );
+      throw error;
     }
   };
 
