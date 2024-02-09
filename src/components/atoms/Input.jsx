@@ -13,7 +13,7 @@ export default function Input({...rest}) {
   } = rest;
   const [showPassword, setShowPassword] = useState(false);
   return (
-    <View className="relative my-2">
+    <View className="relative  my-2">
       <Text className="text-black">{label}</Text>
       <TextInput
         id={id}

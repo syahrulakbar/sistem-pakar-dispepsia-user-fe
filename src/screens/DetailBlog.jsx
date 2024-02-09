@@ -1,9 +1,14 @@
 import React from 'react';
 import {Image, Pressable, Text, View} from 'react-native';
 import IonIcons from 'react-native-vector-icons/Ionicons';
+import HTML from 'react-native-render-html';
+import {useWindowDimensions} from 'react-native';
 
 export default function DetailBlog({route, navigation}) {
+  const {width} = useWindowDimensions();
+
   const {blog} = route.params;
+  const baseStyle = {color: 'black', fontSize: 18};
   return (
     <View className="w-full h-full flex flex-col">
       <View className="w-full px-2 py-4 flex flex-row items-center">
@@ -23,7 +28,11 @@ export default function DetailBlog({route, navigation}) {
           <Text className="w-full font-bold text-2xl text-black ">
             {blog.title}
           </Text>
-          <Text className="text-black text-lg">{blog.description}</Text>
+          <HTML
+            contentWidth={width}
+            baseStyle={baseStyle}
+            source={{html: blog.description}}
+          />
         </View>
       </View>
     </View>

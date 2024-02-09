@@ -58,8 +58,8 @@ export default function Signup({navigation}) {
   });
 
   return (
-    <KeyboardAvoidingView className="flex flex-1" behavior="height">
-      <View className="w-full h-screen flex  flex-1 flex-col  justify-evenly items-center p-2">
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View className="w-full h-screen flex flex-col  justify-evenly items-center p-2">
         <View className="w-full flex flex-col justify-around">
           <Heading text="Buat Akun Si ParDi" />
           <View className="w-full flex flex-col justify-around">
@@ -104,6 +104,6 @@ export default function Signup({navigation}) {
           </Text>
         </Pressable>
       </View>
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 }

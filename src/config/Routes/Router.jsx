@@ -7,21 +7,22 @@ import {
   DetailBlog,
   SettingAccount,
 } from '../../screens';
-import Axios from 'axios';
 import {ActivityIndicator, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import ProtectedRoute from './ProtectedRoute';
+import AxiosJWTConfig from '../../utils/axiosJWT';
 
 export default function Router() {
   const Stack = createNativeStackNavigator();
   const [isLoading, setIsLoading] = useState(true);
   const {isLogin} = useSelector(state => state.globalReducer);
   const dispatch = useDispatch();
+
   const checkUser = async () => {
     try {
+      const axiosJWT = await AxiosJWTConfig();
       dispatch({type: 'SET_IS_LOGIN', payload: false});
-      await Axios.get('http://10.0.2.2:5000/api/users/profile', {
-        withCredentials: true,
+      await axiosJWT.get('http://10.0.2.2:5000/api/users/profile', {
         timeout: 3000,
       });
       dispatch({type: 'SET_IS_LOGIN', payload: true});
