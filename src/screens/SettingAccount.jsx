@@ -26,6 +26,7 @@ export default function SettingAccount({navigation}) {
 
   const handleChoosePhoto = async () => {
     const image = await launchImageLibrary(options);
+    if (image.didCancel) return;
     const file = image.assets[0];
     const profilePicture = {
       uri: file.uri,
@@ -91,12 +92,12 @@ export default function SettingAccount({navigation}) {
         <View className="w-full flex flex-col justify-around">
           <Heading text={`Setting Account`} />
           <View className="w-full flex flex-col justify-around">
-            <View className="w-full h-48 mb-5">
+            <View className="w-full h-48 mb-7">
               <Text className="text-black">Profile Picture</Text>
               <Pressable
                 onPress={handleChoosePhoto}
                 className="flex justify-center items-center mt-2">
-                {photo ? (
+                {user?.profilePicture ? (
                   <Image
                     source={{uri: photo.uri ? photo.uri : photo}}
                     className="w-full h-full rounded-md"

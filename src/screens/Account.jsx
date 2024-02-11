@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
 import {getCurrentUser} from '../config/Redux/Action';
 import {API_IMAGE} from '@env';
+import Avatar from '../assets/images/avatar.png';
 
 export default function SettingAccount({navigation}) {
   const {showModal, user} = useSelector(state => state.globalReducer);
@@ -27,12 +28,16 @@ export default function SettingAccount({navigation}) {
           <Text className="font-extrabold text-blue-400 text-2xl">Account</Text>
         </View>
         <View className="w-full flex items-center my-2">
-          <Image
-            source={{
-              uri: API_IMAGE + user?.profilePicture,
-            }}
-            className="w-32 h-32 rounded-full "
-          />
+          {user?.profilePicture ? (
+            <Image
+              source={{
+                uri: API_IMAGE + user?.profilePicture,
+              }}
+              className="w-32 h-32 rounded-full"
+            />
+          ) : (
+            <Image source={Avatar} className="w-32 h-32 rounded-full" />
+          )}
         </View>
         <View className="w-full flex flex-col items-center my-2">
           <Text className="text-4xl font-bold text-black">{user?.name}</Text>

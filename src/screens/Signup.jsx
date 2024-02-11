@@ -1,17 +1,12 @@
-import Axios from 'axios';
 import {useFormik} from 'formik';
-import React, {useState} from 'react';
 import {Pressable, ScrollView, Text, View} from 'react-native';
 import * as Yup from 'yup';
-import {useToast} from 'react-native-toast-notifications';
 import {Button, Heading, Input} from '../components';
 import {signUp} from '../config/Redux/Action';
 
 export default function Signup({navigation}) {
-  const toast = useToast();
-
   const handleSubmit = async values => {
-    signUp(values, formik, navigation);
+    await signUp(values, formik, navigation);
   };
 
   const formik = useFormik({

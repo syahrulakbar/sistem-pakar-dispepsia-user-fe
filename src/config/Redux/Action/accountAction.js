@@ -1,5 +1,7 @@
 import {Toast} from 'react-native-toast-notifications';
 import AxiosJWTConfig from '../../../utils/axiosJWT';
+import Axios from 'axios';
+import {API_SERVER} from '@env';
 
 export const getCurrentUser = () => async dispatch => {
   try {
@@ -42,8 +44,7 @@ export const updateUser = async (values, navigation, user) => {
 };
 export const signIn = (values, formik, navigation) => async dispatch => {
   try {
-    const AxiosJWT = await AxiosJWTConfig();
-    await AxiosJWT.post(`/login`, values, {
+    await Axios.post(`${API_SERVER}/login`, values, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -64,12 +65,14 @@ export const signIn = (values, formik, navigation) => async dispatch => {
 
 export const signUp = async (values, formik, navigation) => {
   try {
-    const AxiosJWT = await AxiosJWTConfig();
-    await AxiosJWT.post(`/register`, values, {
+    console.log(values);
+    const response = await Axios.post(`${API_SERVER}/register`, values, {
+      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
       },
     });
+    console.log(response);
     formik.resetForm();
     Toast.show('Register Successfully, Please Login', {
       type: 'success',
@@ -79,6 +82,7 @@ export const signUp = async (values, formik, navigation) => {
     Toast.show(error.response?.data.message || 'Failed to Register Account', {
       type: 'danger',
     });
+    console.log(error);
     throw error;
   }
 };

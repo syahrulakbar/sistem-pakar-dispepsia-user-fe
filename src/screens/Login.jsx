@@ -1,14 +1,11 @@
-import {useState} from 'react';
 import {KeyboardAvoidingView, Pressable, Text, View} from 'react-native';
 import {Button, Form, Heading, Input} from '../components';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import {useDispatch} from 'react-redux';
 import {signIn} from '../config/Redux/Action';
 
 export default function Login({navigation}) {
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const dispatch = useDispatch();
 
   const handleSubmit = async values => {
@@ -47,22 +44,13 @@ export default function Login({navigation}) {
             formatPassword
           />
         </View>
-        <View>
-          <View className="flex flex-row justify-start mb-2 items-center">
-            <BouncyCheckbox
-              fillColor="#38bdf8"
-              value={toggleCheckBox}
-              onValueChange={newValue => setToggleCheckBox(newValue)}
-            />
-            <Text className="text-base">Ingat Saya</Text>
-          </View>
-          <Button
-            text="Masuk"
-            handleSubmit={formik.handleSubmit}
-            disabled={formik.isSubmitting}
-            type="blue"
-          />
-        </View>
+
+        <Button
+          text="Masuk"
+          handleSubmit={formik.handleSubmit}
+          disabled={formik.isSubmitting}
+          type="blue"
+        />
       </View>
       <Pressable onPress={() => navigation.navigate('Signup')}>
         <Text className="text-md">

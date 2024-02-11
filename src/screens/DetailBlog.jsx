@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Pressable, Text, View} from 'react-native';
+import {Image, Pressable, ScrollView, Text, View} from 'react-native';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import HTML from 'react-native-render-html';
 import {useWindowDimensions} from 'react-native';
@@ -20,22 +20,24 @@ export default function DetailBlog({route, navigation}) {
           Berita Kesehatan
         </Text>
       </View>
-      <View className="w-full">
-        <Image
-          source={{uri: API_IMAGE + blog.image}}
-          className="w-full h-full flex basis-1/3 bg-cover"
-        />
-        <View className="p-2">
-          <Text className="w-full font-bold text-2xl text-black ">
-            {blog.title}
-          </Text>
-          <HTML
-            contentWidth={width}
-            baseStyle={baseStyle}
-            source={{html: blog.description}}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View className="w-full h-full">
+          <Image
+            source={{uri: API_IMAGE + blog.image}}
+            className="w-full h-56  bg-cover"
           />
+          <View className="p-2 ">
+            <Text className="w-full font-bold text-2xl text-black  mb-5">
+              {blog.title}
+            </Text>
+            <HTML
+              contentWidth={width}
+              baseStyle={baseStyle}
+              source={{html: blog.description}}
+            />
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 }
