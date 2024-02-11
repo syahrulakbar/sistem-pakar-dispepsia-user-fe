@@ -1,20 +1,20 @@
 const initialState = {
-  blogs: [],
-  blog: {},
+  user: {},
   isLogin: false,
+  isLoading: true,
   showModal: false,
 };
 const globalReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_BLOGS':
+    case 'SET_CURRENT_USER':
       return {
         ...state,
-        blogs: action.payload,
+        user: action.payload,
       };
-    case 'SET_BLOG':
+    case 'SET_IS_LOADING':
       return {
         ...state,
-        blog: action.payload,
+        isLoading: action.payload,
       };
     case 'SET_IS_LOGIN':
       return {

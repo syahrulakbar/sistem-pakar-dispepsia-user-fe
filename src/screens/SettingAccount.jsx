@@ -2,64 +2,18 @@ import {Image, Pressable, ScrollView, Text, View} from 'react-native';
 import {Button, Form, Heading, Input} from '../components';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
-import Axios from 'axios';
-import {useEffect, useState} from 'react';
-import CookieManager from '@react-native-cookies/cookies';
+import {useState} from 'react';
 import {launchImageLibrary} from 'react-native-image-picker';
-import {useToast} from 'react-native-toast-notifications';
+import {updateUser} from '../config/Redux/Action';
+import {API_IMAGE} from '@env';
+import {useSelector} from 'react-redux';
 
 export default function SettingAccount({navigation}) {
-  const [user, setUser] = useState({});
-  const [photo, setPhoto] = useState(null);
-  const toast = useToast();
-  const handleSubmit = async values => {
-    try {
-      const formData = new FormData();
-      if (values.password) formData.append('password', values.password);
-      formData.append('profilePicture', values.profilePicture);
-      formData.append('name', values.name);
-      formData.append('email', values.email);
-      formData.append('confirmPassword', values.confirmPassword);
+  const {user} = useSelector(state => state.globalReducer);
+  const [photo, setPhoto] = useState(API_IMAGE + user?.profilePicture || null);
 
-      await Axios.patch(`http://10.0.2.2:5000/api/users/${user.id}`, formData, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      toast.show('Update Account Success', {
-        type: 'success',
-      });
-      navigation.navigate('Account');
-    } catch (error) {
-      toast.show(error.response?.data.message || 'Failed to Update Account', {
-        type: 'danger',
-      });
-      throw error;
-    }
-  };
-
-  const getCurrentUser = async userId => {
-    try {
-      const response = await Axios.get(
-        `http://10.0.2.2:5000/api/users/${userId}`,
-        {
-          withCredentials: true,
-        },
-      );
-      setUser(response?.data.data);
-      setPhoto(
-        `http://10.0.2.2:5000/assets/${response?.data.data.profilePicture}`,
-      );
-    } catch (error) {
-      toast.show(
-        error.response?.data.message || 'Failed to Get Current Account',
-        {
-          type: 'danger',
-        },
-      );
-      throw error;
-    }
+  const handleSubmit = values => {
+    updateUser(values, navigation, user);
   };
 
   const options = {
@@ -85,16 +39,6 @@ export default function SettingAccount({navigation}) {
     formik.setFieldValue('profilePicture', profilePicture);
     setPhoto(profilePicture);
   };
-
-  useEffect(() => {
-    CookieManager.get('http://10.0.2.2:8081/')
-      .then(cookies => {
-        getCurrentUser(cookies.userId.value);
-      })
-      .catch(error => {
-        console.log('Error:', error);
-      });
-  }, []);
 
   const formik = useFormik({
     enableReinitialize: true,

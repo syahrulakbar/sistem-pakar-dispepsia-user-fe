@@ -10,32 +10,15 @@ import {
 import {ActivityIndicator, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import ProtectedRoute from './ProtectedRoute';
-import AxiosJWTConfig from '../../utils/axiosJWT';
+import {checkUser} from '../Redux/Action';
 
 export default function Router() {
   const Stack = createNativeStackNavigator();
-  const [isLoading, setIsLoading] = useState(true);
-  const {isLogin} = useSelector(state => state.globalReducer);
+  const {isLogin, isLoading} = useSelector(state => state.globalReducer);
   const dispatch = useDispatch();
 
-  const checkUser = async () => {
-    try {
-      const axiosJWT = await AxiosJWTConfig();
-      dispatch({type: 'SET_IS_LOGIN', payload: false});
-      await axiosJWT.get('http://10.0.2.2:5000/api/users/profile', {
-        timeout: 3000,
-      });
-      dispatch({type: 'SET_IS_LOGIN', payload: true});
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-      setIsLoading(false);
-      dispatch({type: 'SET_IS_LOGIN', payload: false});
-      throw error;
-    }
-  };
   useEffect(() => {
-    checkUser();
+    dispatch(checkUser());
   }, []);
 
   if (isLoading)

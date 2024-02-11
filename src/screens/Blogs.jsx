@@ -1,26 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import {Image, Pressable, Text, View} from 'react-native';
-import Axios from 'axios';
-import {useToast} from 'react-native-toast-notifications';
+import {getBlogs} from '../config/Redux/Action';
+import {API_IMAGE} from '@env';
+import moment from 'moment';
 
 export default function Blogs({navigation}) {
   const [blogs, setBlogs] = useState([]);
-  const toast = useToast();
-  const getBlogs = async () => {
+  const getAllBlogs = async () => {
     try {
-      const response = await Axios.get('http://10.0.2.2:5000/api/blog', {
-        withCredentials: true,
-      });
-      setBlogs(response.data.data);
+      const response = await getBlogs();
+      setBlogs(response);
     } catch (error) {
-      toast.show(error.response.data.message || 'Failed to Get Blogs', {
-        type: 'danger',
-      });
-      throw error;
+      console.log(error);
     }
   };
+
   useEffect(() => {
-    getBlogs();
+    getAllBlogs();
   }, []);
 
   return (
@@ -40,7 +36,7 @@ export default function Blogs({navigation}) {
           key={blog.id}
           className="w-full flex flex-row h-1/5 px-2 my-5">
           <Image
-            source={{uri: `http://10.0.2.2:5000/assets/${blog.image}`}}
+            source={{uri: API_IMAGE + blog.image}}
             className="flex  w-full h-full basis-1/3  bg-cover"
           />
           <View className="flex flex-col basis-2/3 w-full justify-evenly pl-2">
@@ -48,12 +44,9 @@ export default function Blogs({navigation}) {
               {blog.title}
             </Text>
             <Text className="text-base">By Admin Si ParDi</Text>
-            <View className="w-full flex flex-row">
-              <Text className="text-base text-blue-400 font-medium">
-                Dispepsia
-              </Text>
-              <Text className="text-base mx-2">1m ago</Text>
-            </View>
+            <Text className="text-base">
+              {moment(blog?.createdAt).fromNow()}
+            </Text>
           </View>
         </Pressable>
       ))}

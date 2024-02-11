@@ -3,6 +3,7 @@ import {Image, Pressable, Text, View} from 'react-native';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import HTML from 'react-native-render-html';
 import {useWindowDimensions} from 'react-native';
+import {API_IMAGE} from '@env';
 
 export default function DetailBlog({route, navigation}) {
   const {width} = useWindowDimensions();
@@ -21,7 +22,7 @@ export default function DetailBlog({route, navigation}) {
       </View>
       <View className="w-full">
         <Image
-          source={{uri: `http://10.0.2.2:5000/assets/${blog.image}`}}
+          source={{uri: API_IMAGE + blog.image}}
           className="w-full h-full flex basis-1/3 bg-cover"
         />
         <View className="p-2">

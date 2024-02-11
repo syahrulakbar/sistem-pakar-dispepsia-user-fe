@@ -1,42 +1,17 @@
 import Axios from 'axios';
 import {useFormik} from 'formik';
 import React, {useState} from 'react';
-import {
-  KeyboardAvoidingView,
-  Pressable,
-  ScrollView,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import {Pressable, ScrollView, Text, View} from 'react-native';
 import * as Yup from 'yup';
 import {useToast} from 'react-native-toast-notifications';
 import {Button, Heading, Input} from '../components';
+import {signUp} from '../config/Redux/Action';
 
 export default function Signup({navigation}) {
-  const [showPassword, setShowPassword] = useState(false);
   const toast = useToast();
 
   const handleSubmit = async values => {
-    try {
-      await Axios.post('http://10.0.2.2:5000/api/register', values, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      formik.resetForm();
-      toast.show('Register Successfully, Please Login', {
-        type: 'success',
-      });
-      navigation.navigate('Login');
-    } catch (error) {
-      toast.show(error.response.data.message || 'Failed to Register Account', {
-        type: 'danger',
-      });
-      throw error;
-    }
+    signUp(values, formik, navigation);
   };
 
   const formik = useFormik({

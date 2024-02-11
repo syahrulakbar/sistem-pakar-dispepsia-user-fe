@@ -4,35 +4,15 @@ import {Button, Form, Heading, Input} from '../components';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
-import Axios from 'axios';
 import {useDispatch} from 'react-redux';
-import {useToast} from 'react-native-toast-notifications';
+import {signIn} from '../config/Redux/Action';
 
 export default function Login({navigation}) {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const dispatch = useDispatch();
-  const toast = useToast();
 
   const handleSubmit = async values => {
-    try {
-      await Axios.post('http://10.0.2.2:5000/api/login', values, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      formik.resetForm();
-      toast.show('Login Successfully', {
-        type: 'success',
-      });
-      dispatch({type: 'SET_IS_LOGIN', payload: true});
-      navigation.navigate('Protected');
-    } catch (error) {
-      toast.show(error.response.data.message || 'Failed to Login', {
-        type: 'danger',
-      });
-      throw error;
-    }
+    dispatch(signIn(values, formik, navigation));
   };
 
   const formik = useFormik({

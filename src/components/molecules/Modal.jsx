@@ -1,29 +1,13 @@
 import {Text, View} from 'react-native';
 import {Button} from '../atoms';
 import {useDispatch} from 'react-redux';
-import Axios from 'axios';
-import {useToast} from 'react-native-toast-notifications';
+import {signOut} from '../../config/Redux/Action';
 
 export default function Modal() {
   const dispatch = useDispatch();
-  const toast = useToast();
 
-  const handleSubmit = async values => {
-    try {
-      await Axios.delete('http://10.0.2.2:5000/api/logout', {
-        withCredentials: true,
-      });
-      toast.show('Logout Successfully', {
-        type: 'success',
-      });
-      dispatch({type: 'SET_SHOW_MODAL', payload: false});
-      dispatch({type: 'SET_IS_LOGIN', payload: false});
-    } catch (error) {
-      toast.show(error.response.data.message || 'Failed Logout', {
-        type: 'danger',
-      });
-      throw error;
-    }
+  const handleSubmit = async () => {
+    dispatch(signOut());
   };
 
   return (
