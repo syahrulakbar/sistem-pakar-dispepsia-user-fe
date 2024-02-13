@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {Image, Pressable, Text, View} from 'react-native';
+import {Image, Pressable, ScrollView, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Modal} from '../components';
@@ -22,7 +22,8 @@ export default function SettingAccount({navigation}) {
   return (
     <>
       {showModal && <Modal showModal={showModal} />}
-      <View
+      <ScrollView
+        showsVerticalScrollIndicator={false}
         className={`w-full h-full flex flex-col ${showModal && 'opacity-25'}`}>
         <View className="w-full px-2 py-4">
           <Text className="font-extrabold text-blue-400 text-2xl">Account</Text>
@@ -61,7 +62,7 @@ export default function SettingAccount({navigation}) {
           </View>
           <MaterialIcons name="keyboard-arrow-right" size={30} />
         </Pressable>
-      </View>
+      </ScrollView>
     </>
   );
 }

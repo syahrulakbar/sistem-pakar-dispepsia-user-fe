@@ -6,6 +6,7 @@ import {
   Signup,
   DetailBlog,
   SettingAccount,
+  DetailKonsultasi,
 } from '../../screens';
 import {ActivityIndicator, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -37,6 +38,7 @@ export default function Router() {
         <>
           <Stack.Screen name="Protected" component={ProtectedRoute} />
           <Stack.Screen name="DetailBlog" component={DetailBlog} />
+          <Stack.Screen name="DetailKonsultasi" component={DetailKonsultasi} />
           <Stack.Screen name="SettingAccount" component={SettingAccount} />
         </>
       ) : (

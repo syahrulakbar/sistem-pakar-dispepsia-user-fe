@@ -11,7 +11,7 @@ export default function Modal() {
   };
 
   return (
-    <View className="w-full h-screen absolute flex items-center justify-center top-0 right-0 left-0  z-30">
+    <View className="w-full h-full absolute flex items-center justify-center top-0 right-0 left-0  z-30">
       <View className="w-[90%] bg-white p-5 rounded-md">
         <View className="mb-2">
           <Text className="text-black text-2xl font-semibold">Keluar Akun</Text>

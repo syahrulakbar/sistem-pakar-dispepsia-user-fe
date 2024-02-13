@@ -65,7 +65,6 @@ export const signIn = (values, formik, navigation) => async dispatch => {
 
 export const signUp = async (values, formik, navigation) => {
   try {
-    console.log(values);
     const response = await Axios.post(`${API_SERVER}/register`, values, {
       withCredentials: true,
       headers: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Pressable, Text, View} from 'react-native';
+import {Image, Pressable, ScrollView, Text, View} from 'react-native';
 import imgKonsultasi from '../assets/images/Illustration.png';
 import {Button} from '../components';
 
@@ -31,7 +31,9 @@ export default function RiwayatKonsultasi({navigation}) {
     },
   ];
   return (
-    <View className="w-full h-full flex flex-col">
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      className="w-full h-full flex flex-col">
       <View className="w-full px-2 py-4">
         <Text className="font-extrabold text-blue-400 text-2xl">
           Riwayat Konsultasi
@@ -54,19 +56,20 @@ export default function RiwayatKonsultasi({navigation}) {
       ) : (
         <View className="w-full h-full flex flex-col px-2">
           {historyKonsultasi?.map((item, index) => (
-            <View className="w-full rounded-md shadow-xl mx-3">
-              <Pressable
-                key={index}
-                className="w-full flex flex-col items-start my-2 rounded-md shadow-lg px-5 ">
+            <Pressable
+              key={index}
+              onPress={() => navigation.navigate('DetailKonsultasi', {item})}
+              className="w-full bg-white  rounded-md shadow-xl my-2">
+              <View className="w-full flex flex-col items-start my-2 rounded-md shadow-lg px-5 ">
                 <Text className="text-black text-xl font-bold">
                   {item.tanggal}
                 </Text>
                 <Text className="text-gray-500 text-lg">{item.hasil}</Text>
-              </Pressable>
-            </View>
+              </View>
+            </Pressable>
           ))}
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 }
