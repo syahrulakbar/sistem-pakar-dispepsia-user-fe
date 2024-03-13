@@ -3,7 +3,7 @@ import {Text, View} from 'react-native';
 import {Button} from '../components';
 import {useToast} from 'react-native-toast-notifications';
 
-export default function Home() {
+export default function Home({navigation}) {
   const toast = useToast();
 
   return (
@@ -24,9 +24,7 @@ export default function Home() {
           <Button
             text="Mulai Konsultasi"
             type="blue"
-            handleSubmit={() =>
-              toast.show('Fitur ini belum tersedia', {type: 'success'})
-            }
+            handleSubmit={() => navigation.navigate('Konsultasi')}
           />
         </View>
       </View>

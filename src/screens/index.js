@@ -8,6 +8,7 @@ import Blogs from './Blogs';
 import DetailBlog from './DetailBlog';
 import SettingAccount from './SettingAccount';
 import DetailKonsultasi from './DetailKonsultasi';
+import Konsultasi from './Konsultasi';
 
 export {
   Welcome,
@@ -20,4 +21,5 @@ export {
   DetailBlog,
   Account,
   DetailKonsultasi,
+  Konsultasi,
 };
