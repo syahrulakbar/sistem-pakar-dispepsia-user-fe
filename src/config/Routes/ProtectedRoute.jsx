@@ -13,7 +13,7 @@ export default function ProtectedRoute({navigation}) {
           let iconName;
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Riwayat') {
+          } else if (route.name === 'RiwayatKonsultasi') {
             iconName = focused ? 'calendar' : 'calendar-outline';
           } else if (route.name === 'Blog') {
             iconName = focused ? 'book' : 'book-outline';
@@ -33,7 +33,7 @@ export default function ProtectedRoute({navigation}) {
         },
       })}>
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Riwayat" component={RiwayatKonsultasi} />
+      <Tab.Screen name="RiwayatKonsultasi" component={RiwayatKonsultasi} />
       <Tab.Screen name="Blog" component={Blogs} />
       <Tab.Screen name="Account" component={Account} />
     </Tab.Navigator>

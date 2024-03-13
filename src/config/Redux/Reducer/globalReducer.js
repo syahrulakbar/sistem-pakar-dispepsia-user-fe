@@ -3,6 +3,7 @@ const initialState = {
   isLogin: false,
   isLoading: true,
   showModal: false,
+  isUpdate: false,
 };
 const globalReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -10,6 +11,11 @@ const globalReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
+      };
+    case 'SET_IS_UPDATE':
+      return {
+        ...state,
+        isUpdate: action.payload,
       };
     case 'SET_IS_LOADING':
       return {

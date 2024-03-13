@@ -1,9 +1,16 @@
-import React from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {Image, Pressable, ScrollView, Text, View} from 'react-native';
 import imgKonsultasi from '../assets/images/Illustration.png';
 import {Button} from '../components';
+import AxiosJWTConfig from '../utils/axiosJWT';
+import {Toast} from 'react-native-toast-notifications';
+import moment from 'moment';
+import {useSelector} from 'react-redux';
 
 export default function RiwayatKonsultasi({navigation}) {
+  const [konsultasi, setKonsultasi] = useState([]);
+  const {isUpdate} = useSelector(state => state.globalReducer);
+
   const historyKonsultasi = [
     {
       id: 1,
@@ -30,6 +37,25 @@ export default function RiwayatKonsultasi({navigation}) {
       ],
     },
   ];
+  const getKonsultasi = async () => {
+    try {
+      const AxiosJWT = await AxiosJWTConfig();
+      const response = await AxiosJWT.get(`/konsultasi`);
+      setKonsultasi(response?.data.data);
+    } catch (error) {
+      Toast.show(
+        error.response?.data.message || 'Failed to Get Data Konsultasi',
+        {
+          type: 'danger',
+        },
+      );
+      throw error;
+    }
+  };
+  useLayoutEffect(() => {
+    getKonsultasi();
+  }, [isUpdate]);
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -55,16 +81,18 @@ export default function RiwayatKonsultasi({navigation}) {
         </View>
       ) : (
         <View className="w-full h-full flex flex-col px-2">
-          {historyKonsultasi?.map((item, index) => (
+          {konsultasi?.map((item, index) => (
             <Pressable
               key={index}
               onPress={() => navigation.navigate('DetailKonsultasi', {item})}
               className="w-full bg-white  rounded-md shadow-xl my-2">
               <View className="w-full flex flex-col items-start my-2 rounded-md shadow-lg px-5 ">
                 <Text className="text-black text-xl font-bold">
-                  {item.tanggal}
+                  {moment(item.createdAt).format('MMMM Do YYYY')}
                 </Text>
-                <Text className="text-gray-500 text-lg">{item.hasil}</Text>
+                <Text className="text-gray-500 text-lg">
+                  {item.rule.penyakit.nama_penyakit}
+                </Text>
               </View>
             </Pressable>
           ))}

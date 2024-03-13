@@ -20,7 +20,7 @@ export default function Blogs({navigation}) {
   }, []);
 
   return (
-    <View className="w-full h-full flex flex-col  ">
+    <View className="w-full h-full flex flex-col">
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         <View className="w-full  px-2 py-4">
           <Text className="font-extrabold text-blue-400 text-2xl">

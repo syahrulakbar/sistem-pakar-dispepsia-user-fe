@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react';
 import {Pressable, ScrollView, Text, View} from 'react-native';
 import IonIcons from 'react-native-vector-icons/Ionicons';
@@ -18,29 +19,31 @@ export default function DetailKonsultasi({route, navigation}) {
           <Pressable onPress={() => navigation.goBack()}>
             <IonIcons name="arrow-back" size={30} style={{color: 'black'}} />
           </Pressable>
-          <Text className="font-bold text-2xl text-black">{item.tanggal}</Text>
+          <Text className="font-bold text-2xl text-black">
+            {moment(item.createdAt).format('MMMM Do YYYY')}
+          </Text>
         </View>
         <View className="my-2">
           <Text className="font-bold text-xl text-black">Hasil Diagnosa</Text>
-          <Text className="text-black text-lg">{item.hasil}</Text>
+          <Text className="text-black text-lg">
+            {item.rule.penyakit.nama_penyakit}
+          </Text>
         </View>
         <View className="my-2">
           <Text className="font-bold text-xl text-black">
             Gejala Yang Dialami
           </Text>
-          {item.gejala.map((gejala, index) => (
+          {item.rule.gejalas.map((gejala, index) => (
             <Text className="text-black text-lg" key={index}>
-              {'\u2022' + gejala}
+              {'\u2022 ' + gejala.nama_gejala}
             </Text>
           ))}
         </View>
         <View className="my-2">
           <Text className="font-bold text-xl text-black">Solusi</Text>
-          {item.solusi.map((solusi, index) => (
-            <Text className="text-black text-lg" key={index}>
-              {'\u2022' + solusi}
-            </Text>
-          ))}
+          <Text className="text-black text-lg">
+            {item.rule.penyakit.solusi}
+          </Text>
         </View>
       </View>
     </ScrollView>
