@@ -71,7 +71,6 @@ export const signUp = async (values, formik, navigation) => {
         'Content-Type': 'application/json',
       },
     });
-    console.log(response);
     formik.resetForm();
     Toast.show('Register Successfully, Please Login', {
       type: 'success',
@@ -81,7 +80,6 @@ export const signUp = async (values, formik, navigation) => {
     Toast.show(error.response?.data.message || 'Failed to Register Account', {
       type: 'danger',
     });
-    console.log(error);
     throw error;
   }
 };

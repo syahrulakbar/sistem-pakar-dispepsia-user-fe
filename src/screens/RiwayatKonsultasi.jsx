@@ -91,7 +91,7 @@ export default function RiwayatKonsultasi({navigation}) {
                   {moment(item.createdAt).format('MMMM Do YYYY')}
                 </Text>
                 <Text className="text-gray-500 text-lg">
-                  {item.rule.penyakit.nama_penyakit}
+                  {item?.rule?.penyakit.nama_penyakit}
                 </Text>
               </View>
             </Pressable>

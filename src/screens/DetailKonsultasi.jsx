@@ -1,7 +1,8 @@
 import moment from 'moment';
 import React from 'react';
-import {Pressable, ScrollView, Text, View} from 'react-native';
+import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import IonIcons from 'react-native-vector-icons/Ionicons';
+import HTMLView from 'react-native-htmlview';
 
 export default function DetailKonsultasi({route, navigation}) {
   const {item} = route.params;
@@ -41,11 +42,20 @@ export default function DetailKonsultasi({route, navigation}) {
         </View>
         <View className="my-2">
           <Text className="font-bold text-xl text-black">Solusi</Text>
-          <Text className="text-black text-lg">
-            {item.rule.penyakit.solusi}
-          </Text>
+
+          <HTMLView
+            value={'<div>' + item.rule.penyakit.solusi + '</div>'}
+            stylesheet={styles}
+          />
         </View>
       </View>
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  div: {
+    fontSize: 20,
+    color: '#000000',
+  },
+});

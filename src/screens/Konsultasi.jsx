@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, Pressable, Text, View} from 'react-native';
+import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 import {Button} from '../components';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import AxiosJWTConfig from '../utils/axiosJWT';
 import {Toast} from 'react-native-toast-notifications';
 import {useDispatch, useSelector} from 'react-redux';
+import HTMLView from 'react-native-htmlview';
 
 export default function Konsultasi({navigation}) {
   const [gejalas, setGejalas] = useState({});
@@ -117,9 +118,12 @@ export default function Konsultasi({navigation}) {
       {rule?.nama_penyakit && (
         <View className="flex h-full justify-start p-4">
           <Text className="font-bold text-black text-2xl">Hasil Diagnosa</Text>
-          <Text className="text-xl">{rule?.nama_penyakit}</Text>
+          <Text className="text-xl text-black">{rule?.nama_penyakit}</Text>
           <Text className="font-bold text-black text-2xl">Solusi</Text>
-          <Text className="text-xl">{rule?.solusi}</Text>
+          <HTMLView
+            value={'<div>' + rule?.solusi + '</div>'}
+            stylesheet={styles}
+          />
           <View className="w-full flex flex-row p-1 gap-1">
             <View className="w-1/2">
               <Button
@@ -187,3 +191,9 @@ export default function Konsultasi({navigation}) {
     </View>
   );
 }
+const styles = StyleSheet.create({
+  div: {
+    fontSize: 20,
+    color: '#000000',
+  },
+});

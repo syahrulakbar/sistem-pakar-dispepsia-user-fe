@@ -1,15 +1,18 @@
 import React from 'react';
-import {Image, Pressable, ScrollView, Text, View} from 'react-native';
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import IonIcons from 'react-native-vector-icons/Ionicons';
-import HTML from 'react-native-render-html';
-import {useWindowDimensions} from 'react-native';
 import {API_IMAGE} from '@env';
+import HTMLView from 'react-native-htmlview';
 
 export default function DetailBlog({route, navigation}) {
-  const {width} = useWindowDimensions();
-
   const {blog} = route.params;
-  const baseStyle = {color: 'black', fontSize: 18};
   return (
     <View className="w-full h-full flex flex-col">
       <View className="w-full px-2 py-4 flex flex-row items-center">
@@ -30,10 +33,10 @@ export default function DetailBlog({route, navigation}) {
             <Text className="w-full font-bold text-2xl text-black  mb-5">
               {blog.title}
             </Text>
-            <HTML
-              contentWidth={width}
-              baseStyle={baseStyle}
-              source={{html: blog.description}}
+
+            <HTMLView
+              value={'<div>' + blog.description + '</div>'}
+              stylesheet={styles}
             />
           </View>
         </View>
@@ -41,3 +44,9 @@ export default function DetailBlog({route, navigation}) {
     </View>
   );
 }
+const styles = StyleSheet.create({
+  div: {
+    fontSize: 20,
+    color: '#000000',
+  },
+});
