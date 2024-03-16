@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  Alert,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {Button} from '../components';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import AxiosJWTConfig from '../utils/axiosJWT';
@@ -106,6 +113,7 @@ export default function Konsultasi({navigation}) {
       }),
     [navigation, rule],
   );
+  console.log(rule);
 
   return (
     <View className="w-full h-screen justify-start gap-2 relative">
@@ -116,7 +124,9 @@ export default function Konsultasi({navigation}) {
         <Text className="font-bold text-2xl text-black">Menu Konsultasi</Text>
       </View>
       {rule?.nama_penyakit && (
-        <View className="flex h-full justify-start p-4">
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          className="w-full h-full flex flex-col px-4">
           <Text className="font-bold text-black text-2xl">Hasil Diagnosa</Text>
           <Text className="text-xl text-black">{rule?.nama_penyakit}</Text>
           <Text className="font-bold text-black text-2xl">Solusi</Text>
@@ -140,10 +150,10 @@ export default function Konsultasi({navigation}) {
               />
             </View>
           </View>
-        </View>
+        </ScrollView>
       )}
       {rule?.matched === false ? (
-        <View className="flex h-full justify-center items-center">
+        <View className=" h-full justify-center items-center flex">
           <Text className="text-black text-2xl text-center">
             Mohon maaf, penyakit anda tidak dapat didiagnosa
           </Text>
@@ -165,7 +175,10 @@ export default function Konsultasi({navigation}) {
           </View>
         </View>
       ) : (
-        <View className="flex h-full justify-center items-center">
+        <View
+          className={`${
+            rule?.nama_penyakit ? 'hidden' : 'flex'
+          } h-full justify-center items-center`}>
           <Text className="text-black text-2xl text-center">
             {gejalas?.pertanyaan || 'Loading'}
           </Text>
