@@ -19,16 +19,11 @@ export const getCurrentUser = () => async dispatch => {
 export const updateUser = async (values, navigation, user) => {
   try {
     const AxiosJWT = await AxiosJWTConfig();
-    const formData = new FormData();
-    if (values.password) formData.append('password', values.password);
-    formData.append('profilePicture', values.profilePicture);
-    formData.append('name', values.name);
-    formData.append('email', values.email);
-    formData.append('confirmPassword', values.confirmPassword);
-
-    await AxiosJWT.patch(`/users/${user.id}`, formData, {
+    if (!values.password || !values.confirmPassword)
+      [delete values.password, delete values.confirmPassword];
+    await AxiosJWT.patch(`/users/${user.id}`, values, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
       },
     });
     Toast.show('Update Account Success', {
@@ -45,6 +40,8 @@ export const updateUser = async (values, navigation, user) => {
 export const signIn = (values, formik, navigation) => async dispatch => {
   try {
     await Axios.post(`${API_SERVER}/login`, values, {
+      withCredentials: true,
+
       headers: {
         'Content-Type': 'application/json',
       },

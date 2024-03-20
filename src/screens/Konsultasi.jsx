@@ -38,10 +38,10 @@ export default function Konsultasi({navigation}) {
           },
         },
       );
-      const matched = response?.data.data.matched;
+      const matched = response.data.data.matched;
       if (matched) {
         dispatch({type: 'SET_IS_UPDATE', payload: !isUpdate});
-        setRule(response?.data.data.rule.penyakit);
+        setRule(response?.data.data.rule.penyakits);
       } else {
         if (nextId === null) {
           setRule({matched: false});
@@ -113,7 +113,6 @@ export default function Konsultasi({navigation}) {
       }),
     [navigation, rule],
   );
-  console.log(rule);
 
   return (
     <View className="w-full h-screen justify-start gap-2 relative">

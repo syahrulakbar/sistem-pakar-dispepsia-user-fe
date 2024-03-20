@@ -15,6 +15,7 @@ export default function Signup({navigation}) {
       email: '',
       password: '',
       confirmPassword: '',
+      role: 1,
     },
     validationSchema: Yup.object({
       name: Yup.string().required('Name is required'),

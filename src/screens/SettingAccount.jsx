@@ -5,15 +5,42 @@ import * as Yup from 'yup';
 import {useState} from 'react';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {updateUser} from '../config/Redux/Action';
-import {API_IMAGE} from '@env';
 import {useSelector} from 'react-redux';
+import {CLOUD_NAME} from '@env';
+import Axios from 'axios';
 
 export default function SettingAccount({navigation}) {
   const {user} = useSelector(state => state.globalReducer);
-  const [photo, setPhoto] = useState(API_IMAGE + user?.profilePicture || null);
+  const [photo, setPhoto] = useState(user?.profilePicture || null);
 
-  const handleSubmit = values => {
-    updateUser(values, navigation, user);
+  const imageUpload = async file => {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'mrbuy3bg');
+      const response = await Axios.post(
+        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+      return response.data.secure_url;
+    } catch (error) {
+      console.log(error.message);
+      throw error;
+    }
+  };
+
+  const handleSubmit = async values => {
+    try {
+      const profilePicture = await imageUpload(values.profilePicture);
+      await updateUser({...values, profilePicture}, navigation, user);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const options = {
@@ -97,9 +124,9 @@ export default function SettingAccount({navigation}) {
               <Pressable
                 onPress={handleChoosePhoto}
                 className="flex justify-center items-center mt-2">
-                {user?.profilePicture ? (
+                {photo ? (
                   <Image
-                    source={{uri: photo.uri ? photo.uri : photo}}
+                    source={{uri: photo.uri || photo}}
                     className="w-full h-full rounded-md"
                   />
                 ) : (

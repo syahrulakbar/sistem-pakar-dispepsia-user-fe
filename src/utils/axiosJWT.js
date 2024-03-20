@@ -15,7 +15,7 @@ const AxiosJWTConfig = async () => {
   const axiosJWT = axios.create({
     baseURL: API_SERVER,
     withCredentials: true,
-    timeout: 5000,
+    timeout: 3000,
   });
 
   axiosJWT.interceptors.request.use(

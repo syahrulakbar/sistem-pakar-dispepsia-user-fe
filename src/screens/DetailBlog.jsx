@@ -8,7 +8,6 @@ import {
   View,
 } from 'react-native';
 import IonIcons from 'react-native-vector-icons/Ionicons';
-import {API_IMAGE} from '@env';
 import HTMLView from 'react-native-htmlview';
 
 export default function DetailBlog({route, navigation}) {
@@ -25,10 +24,7 @@ export default function DetailBlog({route, navigation}) {
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="w-full h-full">
-          <Image
-            source={{uri: API_IMAGE + blog.image}}
-            className="w-full h-56  bg-cover"
-          />
+          <Image source={{uri: blog.image}} className="w-full h-56  bg-cover" />
           <View className="p-2 ">
             <Text className="w-full font-bold text-2xl text-black  mb-5">
               {blog.title}

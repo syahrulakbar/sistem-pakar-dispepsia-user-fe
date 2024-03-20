@@ -27,14 +27,14 @@ export default function DetailKonsultasi({route, navigation}) {
         <View className="my-2">
           <Text className="font-bold text-xl text-black">Hasil Diagnosa</Text>
           <Text className="text-black text-lg">
-            {item.rule.penyakit.nama_penyakit}
+            {item.rules.penyakits.nama_penyakit}
           </Text>
         </View>
         <View className="my-2">
           <Text className="font-bold text-xl text-black">
             Gejala Yang Dialami
           </Text>
-          {item.rule.gejalas.map((gejala, index) => (
+          {item.rules.gejalas.map((gejala, index) => (
             <Text className="text-black text-lg" key={index}>
               {'\u2022 ' + gejala.nama_gejala}
             </Text>
@@ -44,7 +44,7 @@ export default function DetailKonsultasi({route, navigation}) {
           <Text className="font-bold text-xl text-black">Solusi</Text>
 
           <HTMLView
-            value={'<div>' + item.rule.penyakit.solusi + '</div>'}
+            value={'<div>' + item.rules.penyakits.solusi + '</div>'}
             stylesheet={styles}
           />
         </View>

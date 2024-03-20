@@ -6,7 +6,6 @@ import {Modal} from '../components';
 import {useDispatch, useSelector} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
 import {getCurrentUser} from '../config/Redux/Action';
-import {API_IMAGE} from '@env';
 import Avatar from '../assets/images/avatar.png';
 
 export default function SettingAccount({navigation}) {
@@ -32,7 +31,7 @@ export default function SettingAccount({navigation}) {
           {user?.profilePicture ? (
             <Image
               source={{
-                uri: API_IMAGE + user?.profilePicture,
+                uri: user?.profilePicture,
               }}
               className="w-32 h-32 rounded-full"
             />

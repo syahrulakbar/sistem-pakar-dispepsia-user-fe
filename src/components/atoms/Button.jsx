@@ -2,6 +2,7 @@ import {Pressable, Text} from 'react-native';
 
 export default function Button({...rest}) {
   const {text, handleSubmit, disabled = false, type, outline} = rest;
+
   return (
     <Pressable onPress={handleSubmit} disabled={disabled}>
       <Text
