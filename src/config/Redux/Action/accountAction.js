@@ -2,6 +2,7 @@ import {Toast} from 'react-native-toast-notifications';
 import AxiosJWTConfig from '../../../utils/axiosJWT';
 import Axios from 'axios';
 import {API_SERVER} from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const getCurrentUser = () => async dispatch => {
   try {
@@ -39,13 +40,16 @@ export const updateUser = async (values, navigation, user) => {
 };
 export const signIn = (values, formik, navigation) => async dispatch => {
   try {
-    await Axios.post(`${API_SERVER}/login`, values, {
+    const response = await Axios.post(`${API_SERVER}/login`, values, {
       withCredentials: true,
 
       headers: {
         'Content-Type': 'application/json',
       },
     });
+    const {userId, expire} = response.data.data;
+    await AsyncStorage.setItem('userId', userId);
+    await AsyncStorage.setItem('expire', expire.toString());
     formik.resetForm();
     Toast.show('Login Successfully', {
       type: 'success',
@@ -85,6 +89,9 @@ export const signOut = () => async dispatch => {
   try {
     const AxiosJWT = await AxiosJWTConfig();
     await AxiosJWT.delete(`/logout`);
+    await AsyncStorage.removeItem('userId');
+    await AsyncStorage.removeItem('expire');
+
     Toast.show('Logout Successfully', {
       type: 'success',
     });

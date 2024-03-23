@@ -1,12 +1,12 @@
-import CookieManager from '@react-native-cookies/cookies';
 import {API_SERVER} from '@env';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AxiosJWTConfig = async () => {
   const exp = async () => {
     try {
-      const cookies = await CookieManager.get('http://10.0.2.2:8081/');
-      return cookies.expire?.value;
+      const expire = await AsyncStorage.getItem('expire');
+      return parseInt(expire);
     } catch (error) {
       console.log('Error:', error);
     }
